@@ -3,8 +3,13 @@
 
 @section('content')
     <div class="container my-5 bg-white">
-        <h1>{{ $pasta->title }}</h1>
+        <h1>
+            {{ $pasta->title }}<a href="{{ route('pastas.edit', $pasta) }}" title="modifica" class="btn btn-warning my-2"><i
+                    class="fa-solid fa-pencil"></i></a>
+            @include('partials.formdelete')
+        </h1>
         <p>Cottura: {{ $pasta->cooking_time }} | Peso: {{ $pasta->weight }} | Tipo: {{ $pasta->type }} </p>
+        <p>Cottura: {{ $pasta->slug }}</p>
         <div class="row">
             <div class="col">
                 <img class="img-fluid" src="{{ $pasta->src }}" alt="{{ $pasta->title }} src">

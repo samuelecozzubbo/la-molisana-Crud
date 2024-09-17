@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PastaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +16,7 @@ use App\Http\Controllers\PastaController;
 |
 */
 
-Route::get('/', function () {
-    $title = 'Layout base - HOME';
-    $text = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi, iusto dolore eaque laudantium optio, adipisci perspiciatis voluptate obcaecati sit perferendis natus velit ut! Tempora voluptatum ipsam modi rem voluptas.';
-    return view('home', compact('text', 'title'));
-})->name('home');
+Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::get('/chi-siamo', function () {
     return view('about');

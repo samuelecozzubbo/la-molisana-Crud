@@ -76,7 +76,10 @@ class PastaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //dump($id);
+        $pasta = Pasta::find($id);
+        //dump($pasta);
+        return view('pastas.edit', compact('pasta'));
     }
 
     /**
@@ -84,7 +87,20 @@ class PastaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->all();
+        $pasta = Pasta::find($id);
+        //SE il titolo è cambiato genero un nuovo slug
+        //ALTRIMENTI mantengo quello presente
+        if ($data['title'] == $pasta->title) {
+            $data['slug'] = $pasta->slug;
+        } else {
+            $data['slug'] = Helper::generateSlug($data['title'], Pasta::class);
+        }
+        //update() esegue il fill dei dati aggiornandoli
+        $pasta->update($data);
+        return redirect()->route('pastas.show', $pasta);
+        // dump($data);
+        // dump($id);
     }
 
     /**
@@ -92,6 +108,11 @@ class PastaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //dump($id);
+        $pasta = Pasta::find($id);
+        $pasta->delete();
+        //oltre a reindirizzare alla index passo in sessione la variabile 'deleted'
+        //la variabile di sessione viene passata con width(nomevariabile, valore)
+        return redirect()->route('pastas.index')->with('deleted', 'La pasta ' . $pasta->title . ' è stata eliminata correttamente');
     }
 }
