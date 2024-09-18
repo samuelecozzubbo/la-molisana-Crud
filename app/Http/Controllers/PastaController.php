@@ -33,6 +33,46 @@ class PastaController extends Controller
      */
     public function store(Request $request)
     {
+
+        //PRIMA DI TUTTO VALIDIAMO I DATI
+        //Regole di validazione
+        //l'istanza request ha un metodo validate
+        //il primo parametro del metodo validate accetta tutte le rules di validazione
+        //il secondo parametro opzionakle è un array con i messaggi di errore
+        $request->validate([
+            'title' => 'required|min:3|max:50',
+            'src' => 'required|max:255',
+            'src_h' => 'required|max:255',
+            'src_p' => 'required|max:255',
+            'type' => 'required|max:20',
+            'cooking_time' => 'required|max:20',
+            'weight' => 'required|max:20',
+        ], [
+            'title.required' => "Il titolo è un campo obbligatorio",
+            'title.min' => "Il titolo deve contenere almeno :min caratteri",
+            'title.max' => "Il titolo deve contenere almeno :max caratteri",
+            'src.required' => "Il campo src è obbligatorio",
+            'src.max' => "Il campo src può contenere massimo :max caratteri",
+
+            'src_h.required' => "Il campo src_h è obbligatorio",
+            'src_h.max' => "Il campo src_h può contenere massimo :max caratteri",
+
+            'src_p.required' => "Il campo src_p è obbligatorio",
+            'src_p.max' => "Il campo src_p può contenere massimo :max caratteri",
+
+            'type.required' => "Il campo type è obbligatorio",
+            'type.max' => "Il campo type può contenere massimo :max caratteri",
+
+            'cooking_time.required' => "Il tempo di cottura è obbligatorio",
+            'cooking_time.max' => "Il tempo di cottura può contenere massimo :max caratteri",
+
+            'weight.required' => "Il campo peso è obbligatorio",
+            'weight.max' => "Il campo peso può contenere massimo :max caratteri",
+        ]);
+        //Nel momento in cui la validazione non viene superata si
+        //viene reindirizzati alla pagina di origine con in sessione tutti gli errori
+        //Voglio stampare gli errori
+
         /*
         1.$request contiene tutti i dati inviati dal form
         2.$salvo i dati del form nel DB
